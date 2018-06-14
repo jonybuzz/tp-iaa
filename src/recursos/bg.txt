@@ -1,0 +1,10 @@
+neg/1.pgm
+neg/2.pgm
+neg/3.pgm
+neg/4.pgm
+neg/5.pgm
+neg/6.pgm
+neg/7.pgm
+neg/8.pgm
+neg/9.pgm
+neg/10.pgm
