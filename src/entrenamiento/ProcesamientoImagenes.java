@@ -29,7 +29,7 @@ public class ProcesamientoImagenes {
 	public static void pngToPgm(String directorioImagenes) {
 		System.out.println("Convirtiendo imagenes PNG a PGM en blanco y negro");
 		
-		File[] imagenes = new File(directorioImagenes).listFiles((archivo, nombre) -> nombre.endsWith("png"));
+		File[] imagenes = new File(directorioImagenes).listFiles((archivo, nombre ) -> nombre.toUpperCase().endsWith("PNG")  );
 
 		for (int i = 0; i < imagenes.length; i++) {
 			
@@ -38,14 +38,24 @@ public class ProcesamientoImagenes {
 			Mat imagenBN = Imgcodecs.imread(pathImagenOriginal, 0);
 
 			Mat resize = new Mat();
-			Size sz = new Size(75, 75);
+
+			Config config = Config.getInstance();
+			Double length = Double.parseDouble(config.getConfig("IMGwidth"));
+			Double width = Double.parseDouble(config.getConfig("IMGlength")) ;
+			Size sz = new Size(length , width );
 			Imgproc.resize(imagenBN, resize, sz);
 
+			//CONVIERTE TANTO los files .png como los .PNG a .pgm
+			//Guarda los archivos .pgm en la carpeta pos
+			
 			String filename = pathImagenOriginal.replaceAll("png", "pgm");
+			filename = filename.replaceAll("PNG", "pgm");
+			filename = filename.replaceAll("posPng", "pos");
+			//---------------------------------------------------//
+			
 			System.out.println(String.format("Guardando Imagen %s", filename));
 			Imgcodecs.imwrite(filename, resize);
-//			filename = i + ".png";
-//			Imgcodecs.imwrite(filename, resize);
+			
 		}
 
 	}
