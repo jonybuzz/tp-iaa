@@ -11,18 +11,19 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.imgproc.Imgproc;
 
-class Deteccion {
+public class Deteccion {
 
-	private static final String CASCADE_XML_PATH = "recursos/cascade.xml";
 	private static final Scalar COLOR_VERDE = new Scalar(0, 255, 0);
 
-	public static void run(String directorioImagenes) {
+	public static void run() {
+		
+		String directorioImagenes = Config.getInstance().getConfig("imgPath");
 
 		System.out.println("Detectando ofertas en las imagenes del directorio " + directorioImagenes);
 
 		File[] imagenes = new File(directorioImagenes).listFiles();
-		
-		CascadeClassifier clasificadorDeOfertas = new CascadeClassifier(CASCADE_XML_PATH);
+				
+		CascadeClassifier clasificadorDeOfertas = new CascadeClassifier(Config.getInstance().getConfig("cascadePath"));
 
 		for (int i = 0; i < imagenes.length; i++) {
 			Mat imagen = Imgcodecs.imread(imagenes[i].getAbsolutePath());

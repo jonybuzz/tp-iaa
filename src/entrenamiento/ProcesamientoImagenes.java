@@ -8,7 +8,10 @@ import org.opencv.imgproc.Imgproc;
 
 public class ProcesamientoImagenes {
 
-	public static void pgmToPng(String directorioImagenes) {
+	public static void pgmToPng() {
+				
+		String directorioImagenes = Config.getInstance().getConfig("imgPath");
+
 		System.out.println("Convirtiendo imagenes PGM a PNG");
 				
 		File[] imagenes = new File(directorioImagenes).listFiles((archivo, nombre) -> nombre.endsWith("pgm"));
@@ -26,7 +29,10 @@ public class ProcesamientoImagenes {
 
 	}
 
-	public static void pngToPgm(String directorioImagenes) {
+	public static void pngToPgm() {
+		
+		String directorioImagenes = Config.getInstance().getConfig("imgPath");
+		
 		System.out.println("Convirtiendo imagenes PNG a PGM en blanco y negro");
 		
 		File[] imagenes = new File(directorioImagenes).listFiles((archivo, nombre ) -> nombre.toUpperCase().endsWith("PNG")  );
