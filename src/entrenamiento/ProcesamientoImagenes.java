@@ -1,6 +1,5 @@
 package entrenamiento;
 
-import java.awt.image.DirectColorModel;
 import java.io.File;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;

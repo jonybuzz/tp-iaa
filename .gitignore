@@ -1,3 +1,2 @@
 /bin/
-/src/recursos/imagenes/positivas/pgm/
-/src/recursos/imagenes/negativas/pgm/
+/src/recursos/**/pgm/
