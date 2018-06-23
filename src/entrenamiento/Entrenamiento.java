@@ -11,14 +11,20 @@ import java.io.InputStreamReader;
 public class Entrenamiento {
 	
 	public static void run() {
-
+		System.out.println("Comienza entrenamiento");
+		removeOlddataFiles();
 		crearInfoFile();
 		crearBGFile();
 		runOpenCVcreateSamples();
+		// No esta funcionando cuando se envia argumentos -w 75 -h 75, solo funciona -w 48 -h 24
 		runOpenCVtraincascade();
-		
+		System.out.println("Entrenamiento Finalizado con éxito");
 	}
 
+private static void removeOlddataFiles(){
+	System.out.println("Borrando datos de entrenamiento anteriores");
+}	
+	
 private static void crearInfoFile(){
 
 	System.out.println("Generando ofertas.info");
@@ -129,16 +135,21 @@ private static String executeCommand(String command) {
 	Process p;
 	try {
 		p = Runtime.getRuntime().exec(command);
-		p.waitFor();
+	
+		System.out.println("termino de ejecutar comando");
 		BufferedReader reader = 
                         new BufferedReader(new InputStreamReader(p.getInputStream()));
 
                     String line = "";			
 		while ((line = reader.readLine())!= null) {
-			output.append(line + "\n");
+			output.append(line + "\n");	
 		}
+		
+		p.waitFor();
+		
 
 	} catch (Exception e) {
+		System.out.println("no la ibamos a tener");
 		e.printStackTrace();
 	}
 

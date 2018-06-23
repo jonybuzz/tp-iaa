@@ -13,7 +13,7 @@ public class Main {
 			mostraMensajeParametros();
 		}
 
-		
+		//String action = "entrenamiento";
 		switch (args[0]) {
 		case "entrenamiento":
 			Entrenamiento.run();
