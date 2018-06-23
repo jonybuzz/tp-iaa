@@ -31,17 +31,19 @@ public class ProcesamientoImagenes {
 
 	public static void pngToPgm() {
 		System.out.println("Convirtiendo imagenes PNG a PGM en blanco y negro");
-		String directorioImagenesPositivas = Config.getInstance().getConfig("imgPosPath");
-		procesarImagenesPng(directorioImagenesPositivas);
-		String directorioImagenesNegativas = Config.getInstance().getConfig("imgNegPath");
-		procesarImagenesPng(directorioImagenesNegativas);
+		String directorioImagenesPositivasPng = Config.getInstance().getConfig("imgPosPathPng");
+		String directorioImagenesPositivasPgm = Config.getInstance().getConfig("imgPosPathgm");
+		procesarImagenesPng(directorioImagenesPositivasPng, directorioImagenesPositivasPgm);
+		String directorioImagenesNegativasPng = Config.getInstance().getConfig("imgNegPathPng");
+		String directorioImagenesNegativasPgm = Config.getInstance().getConfig("imgNegPathPgm");
+		procesarImagenesPng(directorioImagenesNegativasPng,directorioImagenesNegativasPgm );
 	}
 
-	private static void procesarImagenesPng(String directorioImagenes) {
-		File[] imagenes = new File(directorioImagenes + "/png")
+	private static void procesarImagenesPng(String directorioImagenesPng, String directorioImagenesPgm) {
+		File[] imagenes = new File(directorioImagenesPng)
 				.listFiles((archivo, nombre ) -> nombre.toUpperCase().endsWith("PNG"));
 		
-		File directorioSalida = new File(directorioImagenes + "/pgm");
+		File directorioSalida = new File(directorioImagenesPgm);
 		if(!directorioSalida.exists()) {
 			directorioSalida.mkdir();
 		}

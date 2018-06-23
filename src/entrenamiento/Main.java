@@ -13,8 +13,10 @@ public class Main {
 			mostraMensajeParametros();
 		}
 
-		switch (args[0]) {
+		String action = "entrenamiento";
+		switch (action) {
 		case "entrenamiento":
+			Entrenamiento.run();
 			// Entrenamiento.run; La idea es que al ejecutarse esto se genere el
 			// positive.info negative.bg
 			// y se corra los .exe con los files en pos y neg
