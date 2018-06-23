@@ -13,8 +13,8 @@ public class Main {
 			mostraMensajeParametros();
 		}
 
-		String action = "entrenamiento";
-		switch (action) {
+		
+		switch (args[0]) {
 		case "entrenamiento":
 			Entrenamiento.run();
 			// Entrenamiento.run; La idea es que al ejecutarse esto se genere el
