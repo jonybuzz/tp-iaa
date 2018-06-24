@@ -41,7 +41,7 @@ public class Deteccion {
 			Mat matrizOferta = new Mat(matrizImagen, arrayRectangulosOfertasDetectadas[i]);
 			String filename = imagen.getName() + "-oferta" + (i + 1) + ".png";
 			System.out.println(String.format("Guardando %s de %s", (i + 1), arrayRectangulosOfertasDetectadas.length));
-			Imgcodecs.imwrite(directorioOfertasDetectadas + File.pathSeparator + filename, matrizOferta);
+			Imgcodecs.imwrite(directorioOfertasDetectadas + File.separator + filename, matrizOferta);
 		}
 
 	}
