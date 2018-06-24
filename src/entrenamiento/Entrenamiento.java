@@ -16,13 +16,19 @@ public class Entrenamiento {
 		crearInfoFile();
 		crearBGFile();
 		runOpenCVcreateSamples();
-		// No esta funcionando cuando se envia argumentos -w 75 -h 75, solo funciona -w 48 -h 24
 		runOpenCVtraincascade();
 		System.out.println("Entrenamiento Finalizado con éxito");
 	}
 
 private static void removeOlddataFiles(){
-	System.out.println("Borrando datos de entrenamiento anteriores");
+	System.out.println("Borrando datos de entrenamientos anteriores");
+	String directorioData = Config.getInstance().getConfig("data");
+	File[] files = new File(directorioData).listFiles();
+	for(File file: files) {
+	    if (!file.isDirectory()){ 
+	        file.delete();}
+	}
+	System.out.println("Datos de entrenamientos anteriores borrados");
 }	
 	
 private static void crearInfoFile(){

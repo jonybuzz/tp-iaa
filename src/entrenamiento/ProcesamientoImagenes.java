@@ -10,7 +10,7 @@ public class ProcesamientoImagenes {
 
 	public static void pgmToPng() {
 				
-		String directorioImagenes = Config.getInstance().getConfig("imgPath");
+		String directorioImagenes = Config.getInstance().getConfig("imgNegPathPgm");
 
 		System.out.println("Convirtiendo imagenes PGM a PNG");
 				
@@ -32,7 +32,7 @@ public class ProcesamientoImagenes {
 	public static void pngToPgm() {
 		System.out.println("Convirtiendo imagenes PNG a PGM en blanco y negro");
 		String directorioImagenesPositivasPng = Config.getInstance().getConfig("imgPosPathPng");
-		String directorioImagenesPositivasPgm = Config.getInstance().getConfig("imgPosPathgm");
+		String directorioImagenesPositivasPgm = Config.getInstance().getConfig("imgPosPathPgm");
 		procesarImagenesPng(directorioImagenesPositivasPng, directorioImagenesPositivasPgm);
 		String directorioImagenesNegativasPng = Config.getInstance().getConfig("imgNegPathPng");
 		String directorioImagenesNegativasPgm = Config.getInstance().getConfig("imgNegPathPgm");

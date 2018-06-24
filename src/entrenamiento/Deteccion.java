@@ -17,7 +17,7 @@ public class Deteccion {
 
 	public static void run() {
 		
-		String directorioImagenes = Config.getInstance().getConfig("imgPath");
+		String directorioImagenes = Config.getInstance().getConfig("imgInputPathPng");
 
 		System.out.println("Detectando ofertas en las imagenes del directorio " + directorioImagenes);
 
