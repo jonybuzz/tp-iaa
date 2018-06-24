@@ -11,7 +11,7 @@ public class Main {
 		String action;
 		if (args.length == 0) {
 			mostraMensajeParametros();
-			action = "convertirapgm";
+			action = "all";
 		}else{
 			action =args[0];
 		}
