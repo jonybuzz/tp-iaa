@@ -55,7 +55,7 @@ public class ProcesamientoImagenes {
 			Mat resize = transformarColorYMedidas(pathImagenOriginal);
 
 			//CONVIERTE TANTO los files .png como los .PNG a .pgm
-			String filename = directorioSalida.getAbsolutePath() + "\\" + imagenes[i].getName().replaceAll("\\.png", ".pgm").replaceAll("\\.PNG", ".pgm");
+			String filename = directorioSalida.getAbsolutePath() + File.pathSeparator + imagenes[i].getName().replaceAll("(\\.PNG|\\.png)", ".pgm");
 
 			//---------------------------------------------------//
 			
