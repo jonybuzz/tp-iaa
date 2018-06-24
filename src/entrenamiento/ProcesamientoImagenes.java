@@ -52,15 +52,7 @@ public class ProcesamientoImagenes {
 			
 			String pathImagenOriginal = imagenes[i].getAbsolutePath();
 			
-			Mat imagenBN = Imgcodecs.imread(pathImagenOriginal, 0);
-
-			Mat resize = new Mat();
-
-			Config config = Config.getInstance();
-			Double length = Double.parseDouble(config.getConfig("imgWidth"));
-			Double width = Double.parseDouble(config.getConfig("imgLength")) ;
-			Size sz = new Size(length , width );
-			Imgproc.resize(imagenBN, resize, sz);
+			Mat resize = transformarColorYMedidas(pathImagenOriginal);
 
 			//CONVIERTE TANTO los files .png como los .PNG a .pgm
 			String filename = directorioSalida.getAbsolutePath() + "\\" + imagenes[i].getName().replaceAll("\\.png", ".pgm").replaceAll("\\.PNG", ".pgm");
@@ -72,6 +64,18 @@ public class ProcesamientoImagenes {
 			Imgcodecs.imwrite(filename, resize);
 			
 		}
+	}
+
+	private static Mat transformarColorYMedidas(String pathImagenOriginal) {
+		
+		Mat imagenBN = Imgcodecs.imread(pathImagenOriginal, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
+		Config config = Config.getInstance();
+		Integer width = Integer.parseInt(config.getConfig("imgWidth"));
+		Integer height = Integer.parseInt(config.getConfig("imgHeight")) ;
+		Size size = new Size(width , height);
+		Mat resize = new Mat();
+		Imgproc.resize(imagenBN, resize, size);
+		return resize;
 	}
 
 }

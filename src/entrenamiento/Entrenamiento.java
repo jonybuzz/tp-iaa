@@ -14,7 +14,7 @@ public class Entrenamiento {
 
 	public static void run() {
 		System.out.println("Comienza entrenamiento");
-		removeOlddataFiles();
+		removeOldDataFiles();
 		crearInfoFile();
 		crearBGFile();
 		runOpenCVcreateSamples();
@@ -22,19 +22,17 @@ public class Entrenamiento {
 		System.out.println("Entrenamiento Finalizado con éxito");
 	}
 
-private static void removeOlddataFiles(){
-	System.out.println("Borrando datos de entrenamientos anteriores");
-	String directorioData = Config.getInstance().getConfig("data");
-	File[] files = new File(directorioData).listFiles();
-	for(File file: files) {
-	    if (!file.isDirectory()){ 
-	        file.delete();}
+	private static void removeOldDataFiles() {
+		System.out.println("Borrando datos de entrenamientos anteriores");
+		String directorioData = Config.getInstance().getConfig("data");
+		File[] files = new File(directorioData).listFiles();
+		for (File file : files) {
+			if (!file.isDirectory()) {
+				file.delete();
+			}
+		}
+		System.out.println("Datos de entrenamientos anteriores borrados");
 	}
-	System.out.println("Datos de entrenamientos anteriores borrados");
-}	
-	
-
-
 
 	private static void crearInfoFile() {
 
@@ -44,12 +42,11 @@ private static void removeOlddataFiles(){
 		String directorioPgmPositivas = Config.getInstance().getConfig("imgPosPathPgm");
 		File[] imagenesPositivas = new File(directorioPgmPositivas).listFiles();
 
-
 		String ejemplosPorImagen = "1";
 		String imgWidthStart = "0";
-		String imgLengthStart = "0";
+		String imgHeightStart = "0";
 		// String imgWidth = Config.getInstance().getConfig("imgWidth");
-		// String imgLength = Config.getInstance().getConfig("imgLength");
+		// String imgHeight = Config.getInstance().getConfig("imgLength");
 
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(infoFileName))) {
 
@@ -59,7 +56,7 @@ private static void removeOlddataFiles(){
 				String imgWidth = Integer.toString(matrizImagen.width());
 				String imgHeight = Integer.toString(matrizImagen.height());
 				String registroInfo = String.join(" ", imagenPositiva.toString(), ejemplosPorImagen, imgWidthStart,
-						imgLengthStart, imgWidth, imgHeight);
+						imgHeightStart, imgWidth, imgHeight);
 				writer.write(registroInfo + "\n");
 			}
 
@@ -93,13 +90,13 @@ private static void removeOlddataFiles(){
 
 	private static void runOpenCVcreateSamples() {
 
-		System.out.println("preparando Comando createSamples");
+		System.out.println("Preparando comando createSamples");
 		Config config = Config.getInstance();
 		String createSamplesPath = config.getConfig("exeCreateSamplesPath");
 		String infoPath = config.getConfig("infoFilename");
 		String vecFile = config.getConfig("vecFilename");
 		String width = config.getConfig("imgWidth");
-		String height = config.getConfig("imgLength");
+		String height = config.getConfig("imgHeight");
 		String directorioPgmPositivas = config.getConfig("imgPosPathPgm");
 		File[] imagenesPos = new File(directorioPgmPositivas).listFiles();
 		String cantImagenesPos = String.valueOf(imagenesPos.length);
@@ -112,7 +109,7 @@ private static void removeOlddataFiles(){
 
 	private static void runOpenCVtraincascade() {
 
-		System.out.println("preparando Comando trainCascade");
+		System.out.println("Preparando comando trainCascade");
 		Config config = Config.getInstance();
 		String exeTrainCascadePath = config.getConfig("exeTrainCascadePath");
 		String bgFile = config.getConfig("bgFilename");
@@ -124,7 +121,7 @@ private static void removeOlddataFiles(){
 		String minhitrate = config.getConfig("minhitrate");
 		String maxfalsealarm = config.getConfig("maxfalsealarm");
 		String width = config.getConfig("imgWidth");
-		String height = config.getConfig("imgLength");
+		String height = config.getConfig("imgHeight");
 		String data = config.getConfig("data");
 		File[] negImagenes = new File(directorioPgmNegativas).listFiles();
 		File[] imagenes = new File(directorioPgmPositivas).listFiles();
