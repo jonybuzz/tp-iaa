@@ -11,7 +11,7 @@ public class Main {
 		String action;
 		if (args.length == 0) {
 			mostraMensajeParametros();
-			action = "all";
+			action = "convertirapgm";
 		}else{
 			action =args[0];
 		}
@@ -19,6 +19,9 @@ public class Main {
 		switch (action) {
 		case "entrenamiento":
 			Entrenamiento.run();
+			// Entrenamiento.run; La idea es que al ejecutarse esto se genere el
+			// positive.info negative.bg
+			// y se corra los .exe con los files en pos y neg
 			break;
 		case "detectar":
 			Deteccion.run();
