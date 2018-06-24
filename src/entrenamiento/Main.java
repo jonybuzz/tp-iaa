@@ -17,9 +17,6 @@ public class Main {
 		switch (args[0]) {
 		case "entrenamiento":
 			Entrenamiento.run();
-			// Entrenamiento.run; La idea es que al ejecutarse esto se genere el
-			// positive.info negative.bg
-			// y se corra los .exe con los files en pos y neg
 			break;
 		case "detectar":
 			Deteccion.run();
