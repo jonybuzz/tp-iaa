@@ -10,18 +10,22 @@ import org.opencv.objdetect.CascadeClassifier;
 
 public class Deteccion {
 
+	private static int CANT_FILAS_OFERTAS_POR_CATALOGO = 6;
+	private static int CANT_COLUMNAS_OFERTAS_POR_CATALOGO = 4;
+	private static Config config = Config.getInstance();
+
 	public static void run() {
 
-		String directorioImagenes = Config.getInstance().getConfig("imgInputPathPng");
+		String directorioImagenes = config.getProperty("imgInputPathPng");
 		System.out.println("Detectando ofertas en las imagenes del directorio " + directorioImagenes);
-		File[] imagenes = new File(directorioImagenes).listFiles();
-		CascadeClassifier clasificadorDeOfertas = new CascadeClassifier(Config.getInstance().getConfig("data") + File.separator + "cascade.xml");
 
-		for (File archivoImagen : imagenes) {
+		CascadeClassifier clasificadorDeOfertas = new CascadeClassifier(
+				config.getProperty("data") + File.separator + "cascade.xml");
+
+		for (File archivoImagen : new File(directorioImagenes).listFiles()) {
 
 			Mat imagenOriginal = Imgcodecs.imread(archivoImagen.getAbsolutePath());
-			Mat imagenProcesada = ProcesamientoImagenes.convertirAEscalaGrises(imagenOriginal);
-			imagenProcesada = ProcesamientoImagenes.resize(imagenProcesada, 300, 500);
+			Mat imagenProcesada = prepararImagen(imagenOriginal);
 
 			Rect[] areasConOfertasDetectadas = detectarObjetos(clasificadorDeOfertas, imagenProcesada);
 			System.out.println(String.format("Ofertas detectadas en %s: %s", archivoImagen.getName(),
@@ -31,8 +35,18 @@ public class Deteccion {
 					areasConOfertasDetectadas);
 
 			recortarAreas(archivoImagen.getName(), imagenOriginal, areasConOfertasImagenOriginal,
-					Config.getInstance().getConfig("imgOutputPathPng"));
+					config.getProperty("imgOutputPathPng"));
 		}
+	}
+
+	private static Mat prepararImagen(Mat imagenOriginal) {
+
+		Mat imagenProcesada = ProcesamientoImagenes.convertirAEscalaGrises(imagenOriginal);
+		int pxWidthOferta = config.getIntProperty("imgWidth");
+		int pxHeightOferta = config.getIntProperty("imgHeight");
+		imagenProcesada = ProcesamientoImagenes.resize(imagenProcesada,
+				pxWidthOferta * CANT_COLUMNAS_OFERTAS_POR_CATALOGO, pxHeightOferta * CANT_FILAS_OFERTAS_POR_CATALOGO);
+		return imagenProcesada;
 	}
 
 	private static Rect[] detectarObjetos(CascadeClassifier clasificador, Mat imagen) {
@@ -59,8 +73,9 @@ public class Deteccion {
 		}
 		for (int i = 0; i < areas.length; i++) {
 			Mat imagenArea = new Mat(imagenOriginal, areas[i]);
-			//Reemplaza extension del original por sufijo con numero de oferta y nueva extension
-			String filename = nombreImagenOriginal.replaceAll("(\\..{3}$)", "_oferta" + String.format("%03d", i + 1) + ".png");
+			// Reemplaza extension del original por sufijo con numero de oferta y nueva
+			// extension
+			String filename = nombreImagenOriginal.replaceAll("(\\..{3}$)", String.format("_oferta%03d.png", i + 1));
 			System.out.println(String.format("Guardando %s de %s", (i + 1), areas.length));
 			Imgcodecs.imwrite(directorioSalida + File.separator + filename, imagenArea);
 		}

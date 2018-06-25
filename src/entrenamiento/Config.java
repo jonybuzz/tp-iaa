@@ -18,8 +18,16 @@ public class Config {
 		return instance;
 	}
 
-	public String getConfig(String str) {
+	public String getProperty(String str) {
 		return prop.getProperty(str);
+	}
+
+	public Integer getIntProperty(String str) {
+		try {
+			return Integer.parseInt(prop.getProperty(str));
+		} catch (NumberFormatException ex) {
+			throw new RuntimeException("La property " + str + " no puede ser interpretada como numerica.", ex);
+		}
 	}
 
 	public Config() {
