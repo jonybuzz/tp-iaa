@@ -51,8 +51,11 @@ public class ProcesamientoImagenes {
 		for (int i = 0; i < imagenes.length; i++) {
 			
 			String pathImagenOriginal = imagenes[i].getAbsolutePath();
-			
-			Mat resize = transformarColorYMedidas(pathImagenOriginal);
+			Mat imagenOriginal = Imgcodecs.imread(pathImagenOriginal);
+
+			Mat imagenBN = convertirAEscalaGrises(imagenOriginal);
+			Config config = Config.getInstance();
+			Mat resize = resize(imagenBN, Integer.parseInt(config.getConfig("imgWidth")), Integer.parseInt(config.getConfig("imgHeight")));
 
 			//CONVIERTE TANTO los files .png como los .PNG a .pgm
 			String filename = directorioSalida.getAbsolutePath() + File.separator + imagenes[i].getName().replaceAll("(\\.PNG|\\.png)", ".pgm");
@@ -66,16 +69,17 @@ public class ProcesamientoImagenes {
 		}
 	}
 
-	private static Mat transformarColorYMedidas(String pathImagenOriginal) {
-		
-		Mat imagenBN = Imgcodecs.imread(pathImagenOriginal, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
-		Config config = Config.getInstance();
-		Integer width = Integer.parseInt(config.getConfig("imgWidth"));
-		Integer height = Integer.parseInt(config.getConfig("imgHeight")) ;
-		Size size = new Size(width , height);
+	public static Mat resize(Mat imagenOriginal, int pxWidth, int pxHeight) {
+		Size size = new Size(pxWidth , pxHeight);
 		Mat resize = new Mat();
-		Imgproc.resize(imagenBN, resize, size);
+		Imgproc.resize(imagenOriginal, resize, size);
 		return resize;
+	}
+
+	public static Mat convertirAEscalaGrises(Mat matrizImagen) {
+		Mat imagenBN = new Mat();
+		Imgproc.cvtColor(matrizImagen, imagenBN, Imgproc.COLOR_RGB2GRAY);
+		return imagenBN;
 	}
 
 }
