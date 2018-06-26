@@ -52,9 +52,10 @@ public class ProcesamientoImagenes {
 			// ---------------------------------------------------//
 
 			// Guarda los archivos .pgm en la carpeta pgm
-			System.out.println(String.format("Guardando Imagen %s", filename));
 			Imgcodecs.imwrite(filename, resize);
+			System.out.print("|");
 		}
+		System.out.println("");
 	}
 
 	public static Mat resize(Mat imagenOriginal, int pxWidth, int pxHeight) {
