@@ -126,7 +126,7 @@ public class Entrenamiento {
 
 		String command = String.join(" ", exeTrainCascadePath, "-data", data, "-vec", vecFile, "-bg", bgFile,
 				"-numStages", numStages, "-nsplits", nsplits, "-minHitRate", minHitRate, "-maxFalseAlarmRate",
-				maxFalseAlarmRate, "-numPos", numPos, "-numNeg", numNeg, "-w", width, "-h", height, "-featureType", "LBP");
+				maxFalseAlarmRate, "-numPos", numPos, "-numNeg", numNeg, "-w", width, "-h", height);
 
 		executeCommand(command);
 		System.out.println("Finaliza script trainCascade");
