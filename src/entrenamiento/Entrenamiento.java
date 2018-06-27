@@ -115,8 +115,8 @@ public class Entrenamiento {
 		String bgFile = config.getProperty("bgFilename");
 		String numStages = config.getProperty("numStages");
 		String nsplits = config.getProperty("nsplits");
-		String minhitrate = config.getProperty("minhitrate");
-		String maxfalsealarm = config.getProperty("maxfalsealarm");
+		String minHitRate = config.getProperty("minhitrate");
+		String maxFalseAlarmRate = config.getProperty("maxfalsealarm");
 		File[] imagenesPositivas = new File(config.getProperty("imgPosPathPgm")).listFiles();
 		File[] imagenesNegativas = new File(config.getProperty("imgNegPathPgm")).listFiles();
 		String numPos = String.valueOf(imagenesPositivas.length);
@@ -125,8 +125,8 @@ public class Entrenamiento {
 		String height = config.getProperty("imgHeight");
 
 		String command = String.join(" ", exeTrainCascadePath, "-data", data, "-vec", vecFile, "-bg", bgFile,
-				"-numStages", numStages, "-nsplits", nsplits, "-minhitrate", minhitrate, "-maxfalsealarm",
-				maxfalsealarm, "-numPos", numPos, "-numNeg", numNeg, "-w", width, "-h", height);
+				"-numStages", numStages, "-nsplits", nsplits, "-minHitRate", minHitRate, "-maxFalseAlarmRate",
+				maxFalseAlarmRate, "-numPos", numPos, "-numNeg", numNeg, "-w", width, "-h", height, "-featureType", "LBP");
 
 		executeCommand(command);
 		System.out.println("Finaliza script trainCascade");
