@@ -46,6 +46,7 @@ public class Deteccion {
 		int pxHeightOferta = config.getIntProperty("imgHeight");
 		imagenProcesada = ProcesamientoImagenes.resize(imagenProcesada,
 				pxWidthOferta * CANT_COLUMNAS_OFERTAS_POR_CATALOGO, pxHeightOferta * CANT_FILAS_OFERTAS_POR_CATALOGO);
+		imagenProcesada = ProcesamientoImagenes.convertirABinario(imagenProcesada);
 		return imagenProcesada;
 	}
 

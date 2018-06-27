@@ -42,8 +42,9 @@ public class ProcesamientoImagenes {
 		for (File imagen : imagenes) {
 			Mat imagenOriginal = Imgcodecs.imread(imagen.getAbsolutePath());
 
-			Mat imagenBN = convertirAEscalaGrises(imagenOriginal);
-			Mat resize = resize(imagenBN, config.getIntProperty("imgWidth"), config.getIntProperty("imgHeight"));
+			Mat imagenProcesada = convertirAEscalaGrises(imagenOriginal);
+			imagenProcesada = resize(imagenProcesada, config.getIntProperty("imgWidth"), config.getIntProperty("imgHeight"));
+			imagenProcesada = convertirABinario(imagenProcesada);
 
 			// CONVIERTE TANTO los files .png como los .PNG a .pgm
 			String filename = directorioSalida.getAbsolutePath() + File.separator
@@ -52,7 +53,7 @@ public class ProcesamientoImagenes {
 			// ---------------------------------------------------//
 
 			// Guarda los archivos .pgm en la carpeta pgm
-			Imgcodecs.imwrite(filename, resize);
+			Imgcodecs.imwrite(filename, imagenProcesada);
 			System.out.print("|");
 		}
 		System.out.println("");
@@ -68,6 +69,12 @@ public class ProcesamientoImagenes {
 		Mat imagenBN = new Mat();
 		Imgproc.cvtColor(matrizImagen, imagenBN, Imgproc.COLOR_RGB2GRAY);
 		return imagenBN;
+	}
+
+	public static Mat convertirABinario(Mat src) {
+		Mat dst = new Mat();
+		Imgproc.threshold(src, dst, 180, 500, Imgproc.THRESH_BINARY);
+		return dst;
 	}
 
 }
