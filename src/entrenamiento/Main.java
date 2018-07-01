@@ -42,7 +42,9 @@ public class Main {
 
 			System.out.println("#######################");
 			System.out.println("# Procesamiento: " + (finProcImg - inicioProcImg) / 1000 + "\"");
-			System.out.println("# Entrenamiento: " + (finEntrenamiento - finProcImg) / 1000 + "\"");
+			System.out.println("# Entrenamiento: "
+					+ ((finEntrenamiento - finProcImg) / 1000 > 60 ? (finEntrenamiento - finProcImg) / 60000 + "min"
+							: (finEntrenamiento - finProcImg) / 1000 + "\""));
 			System.out.println("# Detección:     " + (finDeteccion - finEntrenamiento) / 1000 + "\"");
 			System.out.println("#######################");
 

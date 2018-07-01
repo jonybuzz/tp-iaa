@@ -132,10 +132,9 @@ public class Entrenamiento {
 		System.out.println("Finaliza script trainCascade");
 	}
 
-	private static String executeCommand(String command) {
+	private static void executeCommand(String command) {
 
 		System.out.println("Ejecutando: [" + command + "]");
-		StringBuffer output = new StringBuffer();
 		Process process;
 
 		try {
@@ -143,17 +142,14 @@ public class Entrenamiento {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = "";
 			while ((line = reader.readLine()) != null) {
-				output.append(line + "\n");
+				System.out.println(line);
 			}
 			process.waitFor();
 			reader.close();
-
 		} catch (Exception e) {
 			System.out.println("Error al ejecutar [" + command + "]");
 			e.printStackTrace();
 		}
-		System.out.println(output);
-		return output.toString();
 	}
 
 }
