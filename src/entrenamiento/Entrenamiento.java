@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.function.ToIntFunction;
 
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -116,8 +115,8 @@ public class Entrenamiento {
 		String bgFile = config.getProperty("bgFilename");
 		int numStages = config.getIntProperty("numStages");
 		String nsplits = config.getProperty("nsplits");
-		String minhitrate = config.getProperty("minhitrate");
-		String maxfalsealarm = config.getProperty("maxfalsealarm");
+		String minHitRate = config.getProperty("minhitrate");
+		String maxFalseAlarmRate = config.getProperty("maxfalsealarm");
 		File[] imagenesPositivas = new File(config.getProperty("imgPosPathPgm")).listFiles();
 		File[] imagenesNegativas = new File(config.getProperty("imgNegPathPgm")).listFiles();
 		int numPos = imagenesPositivas.length;
@@ -133,10 +132,9 @@ public class Entrenamiento {
 		System.out.println("Finaliza script trainCascade");
 	}
 
-	private static String executeCommand(String command) {
+	private static void executeCommand(String command) {
 
 		System.out.println("Ejecutando: [" + command + "]");
-		StringBuffer output = new StringBuffer();
 		Process process;
 
 		try {
@@ -144,17 +142,14 @@ public class Entrenamiento {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = "";
 			while ((line = reader.readLine()) != null) {
-				output.append(line + "\n");
+				System.out.println(line);
 			}
 			process.waitFor();
 			reader.close();
-
 		} catch (Exception e) {
 			System.out.println("Error al ejecutar [" + command + "]");
 			e.printStackTrace();
 		}
-		System.out.println(output);
-		return output.toString();
 	}
 
 }
