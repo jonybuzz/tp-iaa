@@ -125,8 +125,8 @@ public class Entrenamiento {
 		String height = config.getProperty("imgHeight");
 
 		String command = String.join(" ", exeTrainCascadePath, "-data", data, "-vec", vecFile, "-bg", bgFile,
-				"-numStages", String.valueOf(numStages), "-nsplits", nsplits, "-minhitrate", minhitrate, "-maxfalsealarm",
-				maxfalsealarm, "-numPos", String.valueOf(numPos - numStages), "-numNeg", numNeg, "-w", width, "-h", height);
+				"-numStages", String.valueOf(numStages), "-nsplits", nsplits, "-minhitrate", minHitRate, "-maxfalsealarm",
+				maxFalseAlarmRate, "-numPos", String.valueOf(numPos - numStages), "-numNeg", numNeg, "-w", width, "-h", height);
 
 		executeCommand(command);
 		System.out.println("Finaliza script trainCascade");
