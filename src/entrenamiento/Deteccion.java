@@ -4,13 +4,17 @@ import java.io.File;
 import java.util.Arrays;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 public class Deteccion {
 
-	private static int CANT_FILAS_OFERTAS_POR_CATALOGO = 6;
+	private static int CANT_FILAS_OFERTAS_POR_CATALOGO = 7;
 	private static int CANT_COLUMNAS_OFERTAS_POR_CATALOGO = 4;
 	private static Config config = Config.getInstance();
 
@@ -33,7 +37,10 @@ public class Deteccion {
 
 			Rect[] areasConOfertasImagenOriginal = extrapolarAreas(imagenOriginal, imagenProcesada,
 					areasConOfertasDetectadas);
-
+			
+			imprimirAreas(archivoImagen.getName(), imagenOriginal, areasConOfertasImagenOriginal,
+					config.getProperty("imgOutputPathPng"));
+			
 			recortarAreas(archivoImagen.getName(), imagenOriginal, areasConOfertasImagenOriginal,
 					config.getProperty("imgOutputPathPng"));
 		}
@@ -45,7 +52,8 @@ public class Deteccion {
 		int pxWidthOferta = config.getIntProperty("imgWidth");
 		int pxHeightOferta = config.getIntProperty("imgHeight");
 		imagenProcesada = ProcesamientoImagenes.resize(imagenProcesada,
-				pxWidthOferta * CANT_COLUMNAS_OFERTAS_POR_CATALOGO, pxHeightOferta * CANT_FILAS_OFERTAS_POR_CATALOGO);
+				pxWidthOferta * CANT_COLUMNAS_OFERTAS_POR_CATALOGO *100/100, 
+				pxHeightOferta * CANT_FILAS_OFERTAS_POR_CATALOGO *100/100);
 		return imagenProcesada;
 	}
 
@@ -64,6 +72,26 @@ public class Deteccion {
 				(int) (rect.width * widthRatio), (int) (rect.height * heightRatio))).toArray(Rect[]::new);
 	}
 
+	private static void imprimirAreas(String nombreImagenOriginal, Mat imagenOriginal, Rect[] areas,
+			String pathSalida) {
+
+		File directorioSalida = new File(pathSalida);
+		if (!directorioSalida.exists()) {
+			directorioSalida.mkdir();
+		}
+		Mat imagenArea = new Mat();
+		Size sz = new Size(imagenOriginal.size().width,imagenOriginal.size().height);
+		Imgproc.resize(imagenOriginal, imagenArea, sz);
+		for (int i = 0; i < areas.length; i++) {
+			
+			Imgproc.rectangle(imagenArea, new Point(areas[i].x, areas[i].y), new Point(areas[i].x + areas[i].width, areas[i].y + areas[i].height), new Scalar(0, 0, 0));
+			
+		}
+		String filename = nombreImagenOriginal.replaceAll("(\\..{3}$)", String.format("_areas.png"));
+		System.out.println(String.format("Guardando areas"));
+		Imgcodecs.imwrite(directorioSalida + File.separator + filename, imagenArea);
+	}
+	
 	private static void recortarAreas(String nombreImagenOriginal, Mat imagenOriginal, Rect[] areas,
 			String pathSalida) {
 

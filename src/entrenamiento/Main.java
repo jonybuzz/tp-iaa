@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		String action;
+		String action ;
 		if (args.length == 0) {
 			action = "all";
 		} else {

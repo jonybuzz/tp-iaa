@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.function.ToIntFunction;
 
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -113,20 +114,20 @@ public class Entrenamiento {
 		String data = config.getProperty("data");
 		String vecFile = config.getProperty("vecFilename");
 		String bgFile = config.getProperty("bgFilename");
-		String numStages = config.getProperty("numStages");
+		int numStages = config.getIntProperty("numStages");
 		String nsplits = config.getProperty("nsplits");
 		String minhitrate = config.getProperty("minhitrate");
 		String maxfalsealarm = config.getProperty("maxfalsealarm");
 		File[] imagenesPositivas = new File(config.getProperty("imgPosPathPgm")).listFiles();
 		File[] imagenesNegativas = new File(config.getProperty("imgNegPathPgm")).listFiles();
-		String numPos = String.valueOf(imagenesPositivas.length);
+		int numPos = imagenesPositivas.length;
 		String numNeg = String.valueOf(imagenesNegativas.length);
 		String width = config.getProperty("imgWidth");
 		String height = config.getProperty("imgHeight");
 
 		String command = String.join(" ", exeTrainCascadePath, "-data", data, "-vec", vecFile, "-bg", bgFile,
-				"-numStages", numStages, "-nsplits", nsplits, "-minhitrate", minhitrate, "-maxfalsealarm",
-				maxfalsealarm, "-numPos", numPos, "-numNeg", numNeg, "-w", width, "-h", height);
+				"-numStages", String.valueOf(numStages), "-nsplits", nsplits, "-minhitrate", minhitrate, "-maxfalsealarm",
+				maxfalsealarm, "-numPos", String.valueOf(numPos - numStages), "-numNeg", numNeg, "-w", width, "-h", height);
 
 		executeCommand(command);
 		System.out.println("Finaliza script trainCascade");
